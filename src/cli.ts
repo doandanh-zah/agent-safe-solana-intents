@@ -6,6 +6,7 @@ import { Connection, Keypair, PublicKey } from '@solana/web3.js';
 import { parseIntent } from './intent.js';
 import { evaluatePolicy } from './policy.js';
 import { emitReceiptMemo, hashIntent } from './receipt.js';
+import { runDemo } from './demo.js';
 import { Intent } from './types.js';
 
 function getArg(flag: string): string | undefined {
@@ -22,6 +23,7 @@ function usage(): never {
   console.log(`Usage:
   intent:example
   approve --intent <path> --rpc <url> [--payer <path-to-keypair.json>]
+  demo --intent <path> --rpc <url> [--out <dir>]
 `);
   process.exit(1);
 }
@@ -87,12 +89,23 @@ async function cmdApprove() {
   console.log(JSON.stringify({ ...receipt, txSig: sig }, null, 2));
 }
 
+async function cmdDemo() {
+  const intentPath = getArg('--intent');
+  const rpc = getArg('--rpc') || 'https://api.devnet.solana.com';
+  const out = getArg('--out');
+  if (!intentPath) usage();
+
+  const res = await runDemo({ rpc, intentPath, outDir: out });
+  console.log(JSON.stringify(res, null, 2));
+}
+
 async function main() {
   const cmd = process.argv[2];
   if (!cmd) usage();
 
   if (cmd === 'intent:example') return cmdIntentExample();
   if (cmd === 'approve') return cmdApprove();
+  if (cmd === 'demo') return cmdDemo();
 
   usage();
 }

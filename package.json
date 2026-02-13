@@ -7,6 +7,7 @@
     "build": "tsc -p tsconfig.json",
     "intent:example": "node --loader ts-node/esm src/cli.ts intent:example",
     "approve": "node --loader ts-node/esm src/cli.ts approve",
+    "demo": "node --loader ts-node/esm src/cli.ts demo --rpc https://api.devnet.solana.com --intent example.intent.json --out .demo",
     "lint": "node -e \"console.log('no-lint')\""
   },
   "dependencies": {

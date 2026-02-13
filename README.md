@@ -65,9 +65,18 @@ npm install
 # generate an intent example
 npm run intent:example > intent.json
 
-# evaluate policy + emit memo receipt (devnet)
-npm run approve -- --intent intent.json --rpc https://api.devnet.solana.com
+# evaluate policy (no on-chain write)
+node --loader ts-node/esm src/cli.ts approve --intent intent.json --rpc https://api.devnet.solana.com
+
+# full demo (airdrops devnet SOL + writes an on-chain memo receipt)
+npm run demo
 ```
+
+After `npm run demo`, open Solscan Devnet and paste:
+- `airdropSig`
+- `policyReceiptSig`
+
+This demonstrates a real on-chain audit receipt.
 
 ## Autonomy statement (for bounty)
 The project is designed to be operated by an autonomous agent that:
