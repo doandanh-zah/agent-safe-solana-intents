@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/doandanh-zah/agent-safe-solana-intents/blob/main/intent.schema.json",
+  "title": "Agent Safe Solana Intent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "network", "from", "expiresAt"],
+  "properties": {
+    "kind": { "type": "string", "enum": ["sol_transfer"] },
+    "network": { "type": "string", "enum": ["devnet", "mainnet"] },
+    "from": { "type": "string", "minLength": 32 },
+    "to": { "type": "string", "minLength": 32 },
+    "lamports": { "type": "integer", "minimum": 0 },
+    "maxLamports": { "type": "integer", "minimum": 0 },
+    "allowPrograms": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "allowRecipients": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "expiresAt": { "type": "string", "format": "date-time" },
+    "note": { "type": "string", "maxLength": 200 }
+  }
+}

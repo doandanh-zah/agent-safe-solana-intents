@@ -1,0 +1,21 @@
+{
+  "name": "agent-safe-solana-intents",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "intent:example": "node --loader ts-node/esm src/cli.ts intent:example",
+    "approve": "node --loader ts-node/esm src/cli.ts approve",
+    "lint": "node -e \"console.log('no-lint')\""
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.98.0",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}

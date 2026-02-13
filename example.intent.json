@@ -1,0 +1,10 @@
+{
+  "kind": "sol_transfer",
+  "network": "devnet",
+  "from": "11111111111111111111111111111111",
+  "to": "11111111111111111111111111111111",
+  "lamports": 1000000,
+  "maxLamports": 1500000,
+  "expiresAt": "2026-12-31T23:59:59.000Z",
+  "note": "example"
+}
