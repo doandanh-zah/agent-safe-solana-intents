@@ -29,5 +29,22 @@ export function evaluatePolicy(intent: Intent, policy: Policy): PolicyDecision {
     }
   }
 
+  if (intent.kind === 'spl_transfer') {
+    if (!intent.to) reasons.push('missing recipient');
+    if (!intent.mint) reasons.push('missing mint');
+
+    // Note: for SPL transfers we can’t infer SOL cost from amount alone.
+    // Enforce allowlist at least.
+    if (policy.allowRecipients && policy.allowRecipients.length > 0) {
+      if (!policy.allowRecipients.includes(intent.to)) {
+        reasons.push('recipient not allowlisted');
+      }
+    }
+  }
+
+  if (intent.kind === 'memo_only') {
+    if (!intent.memo || intent.memo.trim().length === 0) reasons.push('missing memo');
+  }
+
   return { ok: reasons.length === 0, reasons };
 }

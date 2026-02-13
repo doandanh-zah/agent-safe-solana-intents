@@ -6,12 +6,22 @@
   "additionalProperties": false,
   "required": ["kind", "network", "from", "expiresAt"],
   "properties": {
-    "kind": { "type": "string", "enum": ["sol_transfer"] },
+    "kind": { "type": "string", "enum": ["sol_transfer", "spl_transfer", "memo_only"] },
     "network": { "type": "string", "enum": ["devnet", "mainnet"] },
+
     "from": { "type": "string", "minLength": 32 },
+
     "to": { "type": "string", "minLength": 32 },
+
     "lamports": { "type": "integer", "minimum": 0 },
     "maxLamports": { "type": "integer", "minimum": 0 },
+
+    "mint": { "type": "string", "minLength": 32 },
+    "amount": { "type": "string", "minLength": 1 },
+    "decimals": { "type": "integer", "minimum": 0, "maximum": 18 },
+
+    "memo": { "type": "string", "maxLength": 500 },
+
     "allowPrograms": {
       "type": "array",
       "items": { "type": "string" }
@@ -20,7 +30,22 @@
       "type": "array",
       "items": { "type": "string" }
     },
+
     "expiresAt": { "type": "string", "format": "date-time" },
     "note": { "type": "string", "maxLength": 200 }
-  }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "kind": { "const": "sol_transfer" } } },
+      "then": { "required": ["to", "lamports"] }
+    },
+    {
+      "if": { "properties": { "kind": { "const": "spl_transfer" } } },
+      "then": { "required": ["to", "mint", "amount", "decimals"] }
+    },
+    {
+      "if": { "properties": { "kind": { "const": "memo_only" } } },
+      "then": { "required": ["memo"] }
+    }
+  ]
 }

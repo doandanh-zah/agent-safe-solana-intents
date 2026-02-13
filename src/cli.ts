@@ -63,7 +63,7 @@ async function cmdApprove() {
 
   const policy = {
     maxLamportsPerTx: 2_000_000,
-    allowRecipients: intent.to ? [intent.to] : [],
+    allowRecipients: (intent.kind === 'sol_transfer' || intent.kind === 'spl_transfer') ? [intent.to] : [],
   };
 
   const decision = evaluatePolicy(intent, policy);
